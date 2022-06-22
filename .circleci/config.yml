@@ -48,8 +48,8 @@ jobs:
           name: Scan Docker File
           command: |
             set +eo pipefail
-            ./wizcli auth --id $zfoI6Z1WT7Z7Ll3dcVItIi816YMcA6RA --secret $yj-n-7kuwak7GGyEd3nbNoh5_F5wwsSXVj2AbrUi9pDrJcfHKMmEm-aAfipuQVJd
-            ./wizcli iac scan --path . --policy $BrandonIaC
+            ./wizcli auth --id ${WIZCLI_ID} --secret ${WIZCLI_SECRET}
+            ./wizcli iac scan --path . --policy ${WIZ_POLICY_IAC}
             if [ $? -ne 0 ]; then exit 1; fi
             exitCode=$?
       - run:
@@ -58,16 +58,16 @@ jobs:
             set +eo pipefail
             docker build . -t 712798819748.dkr.ecr.us-east-1.amazonaws.com/devops-lab:latest 
             printf "\nAttemping image scan with auth from cache\n"
-            # ./wizcli auth --id $zfoI6Z1WT7Z7Ll3dcVItIi816YMcA6RA --secret $yj-n-7kuwak7GGyEd3nbNoh5_F5wwsSXVj2AbrUi9pDrJcfHKMmEm-aAfipuQVJd
-            ./wizcli docker scan --image 712798819748.dkr.ecr.us-east-1.amazonaws.com/devops-lab:latest --policy $BrandonVuln
+            # ./wizcli auth --id ${WIZCLI_ID} --secret ${WIZCLI_SECRET}
+            ./wizcli docker scan --image 712798819748.dkr.ecr.us-east-1.amazonaws.com/devops-lab:latest --policy ${WIZ_POLICY}
             if [ $? -ne 0 ]; then exit 1; fi
             exitCode=$?
             if [ $exitCode -eq 3 ]; then
               # Time to authenticate!
               printf "\nCould not authenticate from cache, auth-ing and running the scan\n"
-              # $zfoI6Z1WT7Z7Ll3dcVItIi816YMcA6RA and $yj-n-7kuwak7GGyEd3nbNoh5_F5wwsSXVj2AbrUi9pDrJcfHKMmEm-aAfipuQVJd are variables you declared in step 2c
-              ./wizcli auth --id $zfoI6Z1WT7Z7Ll3dcVItIi816YMcA6RA --secret $yj-n-7kuwak7GGyEd3nbNoh5_F5wwsSXVj2AbrUi9pDrJcfHKMmEm-aAfipuQVJd
-              ./wizcli docker scan --image  712798819748.dkr.ecr.us-east-1.amazonaws.com/devops-lab:latest  --policy $BrandonIaC
+              # ${WIZCLI_ID} and ${WIZCLI_SECRET} are variables you declared in step 2c
+              ./wizcli auth --id ${WIZCLI_ID} --secret ${WIZCLI_SECRET}
+              ./wizcli docker scan --image  712798819748.dkr.ecr.us-east-1.amazonaws.com/devops-lab:latest  --policy ${WIZ_POLICY}
               if [ $? -ne 0 ]; then exit 1; fi
               exitCode=$?
             fi
