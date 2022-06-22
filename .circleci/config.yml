@@ -48,8 +48,8 @@ jobs:
           name: Scan Docker File
           command: |
             set +eo pipefail
-            ./wizcli auth --id ${WIZCLI_ID} --secret ${WIZCLI_SECRET}
-            ./wizcli iac scan --path . --policy ${WIZ_POLICY_IAC}
+            ./wizcli auth --id $zfoI6Z1WT7Z7Ll3dcVItIi816YMcA6RA --secret $yj-n-7kuwak7GGyEd3nbNoh5_F5wwsSXVj2AbrUi9pDrJcfHKMmEm-aAfipuQVJd
+            ./wizcli iac scan --path . --policy $BrandonIaC
             if [ $? -ne 0 ]; then exit 1; fi
             exitCode=$?
       - run:
