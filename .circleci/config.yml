@@ -58,16 +58,16 @@ jobs:
             set +eo pipefail
             docker build . -t 712798819748.dkr.ecr.us-east-1.amazonaws.com/devops-lab:latest 
             printf "\nAttemping image scan with auth from cache\n"
-            # ./wizcli auth --id ${WIZCLI_ID} --secret ${WIZCLI_SECRET}
-            ./wizcli docker scan --image 712798819748.dkr.ecr.us-east-1.amazonaws.com/devops-lab:latest --policy ${WIZ_POLICY}
+            # ./wizcli auth --id $zfoI6Z1WT7Z7Ll3dcVItIi816YMcA6RA --secret $yj-n-7kuwak7GGyEd3nbNoh5_F5wwsSXVj2AbrUi9pDrJcfHKMmEm-aAfipuQVJd
+            ./wizcli docker scan --image 712798819748.dkr.ecr.us-east-1.amazonaws.com/devops-lab:latest --policy $BrandonVuln
             if [ $? -ne 0 ]; then exit 1; fi
             exitCode=$?
             if [ $exitCode -eq 3 ]; then
               # Time to authenticate!
               printf "\nCould not authenticate from cache, auth-ing and running the scan\n"
-              # ${WIZCLI_ID} and ${WIZCLI_SECRET} are variables you declared in step 2c
-              ./wizcli auth --id ${WIZCLI_ID} --secret ${WIZCLI_SECRET}
-              ./wizcli docker scan --image  712798819748.dkr.ecr.us-east-1.amazonaws.com/devops-lab:latest  --policy ${WIZ_POLICY}
+              # $zfoI6Z1WT7Z7Ll3dcVItIi816YMcA6RA and $yj-n-7kuwak7GGyEd3nbNoh5_F5wwsSXVj2AbrUi9pDrJcfHKMmEm-aAfipuQVJd are variables you declared in step 2c
+              ./wizcli auth --id $zfoI6Z1WT7Z7Ll3dcVItIi816YMcA6RA --secret $yj-n-7kuwak7GGyEd3nbNoh5_F5wwsSXVj2AbrUi9pDrJcfHKMmEm-aAfipuQVJd
+              ./wizcli docker scan --image  712798819748.dkr.ecr.us-east-1.amazonaws.com/devops-lab:latest  --policy $BrandonIaC
               if [ $? -ne 0 ]; then exit 1; fi
               exitCode=$?
             fi
